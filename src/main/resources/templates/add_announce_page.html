@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.addAd}"></title>
+</head>
+<body>
+<header th:insert="header.html ::header"></header>
+<div style="margin-top: 150px; width: 800px;margin-bottom: 100px" class="col-md-10 mx-auto col-lg-3">
+    <form enctype="multipart/form-data" class="p-4 p-md-5 border rounded-3 bg-light" action="/add" method="post">
+        <select class="form-select" name="status" aria-label="Default select example">
+            <option value="RENT" th:text="#{title.status_renting}"></option>
+            <option value="SELL" th:text="#{title.selling}"></option>
+        </select>
+
+        <!--        <div id="cities" hidden="hidden">-->
+        <!--            <div th:each="city: ${cities}" th:text="${city}"></div>-->
+        <!--        </div>-->
+
+        <div class="form-floating my-3">
+            <input class="form-control" list="datalistOptions" id="city" name="city" th:placeholder="#{title.search...}">
+            <datalist id="datalistOptions">
+                <option th:each='city : ${cities}' th:value="${city}"></option></datalist>
+            <label for="city" class="form-label" th:text="#{title.city}"></label>
+        </div>
+        <div class="form-floating my-3">
+            <input id="addressInput" type="text" name="address"  class="form-control"
+                   placeholder="City">
+            <label for="addressInput" th:text="#{title.address}"></label>
+        </div>
+        <div class="form-floating my-3">
+            <input id="houseInput" type="text" name="house"  class="form-control"
+                   placeholder="City">
+            <label for="houseInput" th:text="#{title.houseNum}"></label>
+        </div>
+        <div class="form-floating my-3">
+            <input id="roomsInput" type="number" name="rooms"  class="form-control"
+                   placeholder="City">
+            <label for="roomsInput" th:text="#{title.roomNum}"></label>
+        </div>
+        <div class="form-floating my-3">
+            <select id="typeInput"  name="type"  class="form-control"
+                    placeholder="City">
+                <option value="STUDIO" th:text="#{title.studio}"></option>
+                <option value="SEPARATE" th:text="#{title.separate}"></option>
+            </select>
+            <label for="typeInput" th:text="#{title.appType}"></label>
+        </div>
+        <div class="form-floating my-3">
+            <input id="areaInput" type="number" name="area"  class="form-control"
+                   placeholder="City">
+            <label for="areaInput" th:text="#{title.area}"></label>
+        </div>
+        <div class="form-floating my-3">
+            <input id="floorInput" type="number" name="floor"  class="form-control"
+                   placeholder="City">
+            <label for="areaInput" th:text="#{title.floor}"></label>
+        </div>
+        <div class="form-floating my-3">
+            <input id="totalInput" type="number" name="total"  class="form-control"
+                   placeholder="City">
+            <label for="areaInput" th:text="#{title.totalFloors}"></label>
+        </div>
+        <div class="mb-3">
+            <label for="formFileMultiple" class="form-label" th:text="#{title.photos}"></label>
+            <input  class="form-control" name='photos' type="file" id="formFileMultiple" multiple>
+        </div>
+        <script>
+            let cities = []
+            const divcities = document.getElementById("cities")
+            for (let i = 0; i < divcities.children.length; i++) {
+                cities.push(divcities.children[i].innerHTML)
+            }
+            const options = document.getElementById("cityOptions")
+            function filterSearch() {
+                options.innerHTML='';
+                const input = document.getElementById("cityInput")
+                let filteredCities = []
+                for (let i = 0; i < cities.length; i++) {
+                    if (cities[i].toLowerCase().includes(input.value.toLowerCase())) {
+                        let option = document.createElement("div")
+                        option.setAttribute("class","option")
+                        option.setAttribute("onclick","setCity("+i+")")
+                        option.innerHTML = cities[i]
+                        options.appendChild(option)
+                        filteredCities.push(cities[i])
+                    }
+                    console.log(filteredCities)
+                }
+
+            }
+            function setCity(i){
+                const input =document.getElementById("cityInput")
+                input.value = cities[i]
+                options.innerHTML='';
+            }
+
+        </script>
+        <style>
+            .option {
+                width: 200px;
+                /*list-style-type: none;*/
+                /*margin: 0;*/
+                /*opacity: 0;*/
+                padding: 4px 7px;
+                position: relative;
+                /*margin-left: -1000px;*/
+                background: white;
+                box-shadow: 1px 1px 6px rgb(195, 195, 195);
+                border-radius: 2px;
+                /*-webkit-transition: opacity 0.4s;*/
+                /*transition: opacity 0.4s;*/
+            }
+
+            .option {
+                padding: 3px 5px;
+                cursor: pointer;
+            }
+
+            .option:hover {
+                background: lightgray;
+            }
+
+            .show .option {
+                margin-left: 0;
+                opacity: 1;
+            }
+
+            /*.option div .amount {*/
+            /*    display: inline-block;*/
+            /*    padding: 2px 3px;*/
+            /*    background-color: rgb(83, 177, 211);*/
+            /*    border-radius: 3px;*/
+            /*    margin: 0 0 3px 10px;*/
+            /*    font-size: 65%;*/
+            /*    color: white;*/
+            /*}*/
+        </style>
+        <button class="w-50 btn btn-lg btn-primary" style="margin-left: 25%" type="submit"
+                th:text="#{title.placeAnnounce}"></button>
+    </form>
+</div>
+</body>
+</html>

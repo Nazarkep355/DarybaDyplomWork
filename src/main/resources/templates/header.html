@@ -1,0 +1,39 @@
+
+<div th:fragment = 'header'>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <header class="p-3 mb-3 border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href=""></use></svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 link-secondary" th:text="#{title.home}"></a></li>
+                    <li th:if="${session.get('user')==null}"><a href="/register" class="nav-link px-2 link-secondary" th:text="#{title.addAd}"></a></li>
+                    <li th:if="${session.get('user')!=null}"><a href="/add" class="nav-link px-2 link-secondary" th:text="#{title.addAd}"></a></li>
+                    <li><a href="/search?city=Kyiv" class="nav-link px-2 link-dark" th:text ='#{title.kyiv}'></a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <input type="search" class="form-control" th:placeholder="#{title.search...}" aria-label="Search">
+                </form>
+                <a th:if="${session.get('user')==null}" href="/login" style="margin-right: 10px" type="button" class="btn btn-dark" th:text="#{title.logIn}" ></a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" th:text="#{title.language}" data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="${#request.getContextPath()}+'?lang=uk'">Українська</a></li>
+                        <li><a class="dropdown-item" th:href="${#request.getContextPath()}+'?lang=en'">English</a></li>
+                    </ul>
+                </div>
+                <form th:if="${session.get('user')!=null}" style="margin-top: 15px;margin-left:10px " method="post" action="/logout" >
+                    <button type="submit" class="btn btn-dark" th:text="#{title.logOut}"></button>
+                </form>
+            </div>
+        </div>
+    </header>
+</div>

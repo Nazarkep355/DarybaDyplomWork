@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.users}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <link href="css/users_actions_menu.css" rel="stylesheet">
+
+    <style>
+        .wrapper{
+            visibility: hidden;
+        }
+        .item{
+            background: cyan;
+        }
+        .item:hover{
+            background: lightpink;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header th:insert="header.html :: header"></header>
+<table class="table table-striped table-hover  ms-3 me-3 my-1">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{title.id}">
+        </th>
+        <th scope="col" th:text="#{title.name}">
+        </th>
+        <th scope="col" th:text="#{title.email}">
+        </th>
+        <th scope="col" th:text="#{title.role}">
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user :${page.getContent()}" th:oncontextmenu="'menuCall('+${user.id}+',event);return false;'" >
+        <td scope="row" th:text="${user.id}"></td>
+        <td scope="row" th:text="${user.firstName}"></td>
+        <td scope="row" th:text="${user.email}"></td>
+        <td scope="row" th:text="${user.role}"></td>
+    </tr>
+    <!--    <tr oncontextmenu="menuCall(1,event);return false;">-->
+    <!--        <td scope="row">1</td>-->
+    <!--        <td scope="row">name</td>-->
+    <!--        <td scope="row">mail</td>-->
+    <!--    </tr>-->
+    </tbody>
+</table>
+<div id="contextMenu" class="wrapper" style="position: absolute;width: 350px;visibility: hidden">
+    <div class="content">
+        <ul class="list-group">
+            <li id="makeAdminBtn" class="list-group-item item" th:text="#{title.makeAdminBtn}">
+            </li>
+            <li id="makeManagerBtn" class="list-group-item item" th:text="#{title.makeManagerBtn}">
+                Make an Manager
+            </li>
+            <li id="BlockBtn" class="list-group-item item" th:text="#{title.blockBtn}">
+                Block
+            </li>
+            <li id="DeleteBtn" class="list-group-item item" th:text="#{title.delBtn}">
+                Delete account
+            </li>
+        </ul>
+    </div>
+</div>
+<div style="margin-left: 37%; border-radius:25px;position: absolute;width: 350px;align-self:center;
+             height: 200px;vertical-align: middle;visibility: hidden;
+             background: deepskyblue;text-align: center; border: thin solid black;"
+     class="wrapper " id='form'>
+    <table>
+        <tr>
+            <td id="formTitle" style="height: 140px;width: 350px;text-align: center">
+
+            </td>
+        </tr>
+    </table>
+
+    <form action="/updateUser" method="post">
+        <input id="IdInput" name="id" value="" type="hidden">
+        <input id="actionInput" name="action" value="" type="hidden">
+        <button onclick="formHide()" type="button" style="background: gray"
+                class="btn btn-lg btn-primary" th:text="#{title.no}"></button>
+        <button type="submit" style="background: darkkhaki" class="btn btn-lg btn-primary" th:text="#{title.yes}">Yes</button>
+    </form>
+</div>
+<div style="visibility: hidden" id='adminFormTitle' th:text="#{title.sure_admin}">
+</div>
+<div style="visibility: hidden" id='managerFormTitle' th:text="#{title.sure_manager}">
+</div>
+<div style="visibility: hidden" id='deleteFormTitle' th:text="#{title.sure_delete}">
+</div><div style="visibility: hidden" id='blockFormTitle' th:text="#{title.sure_block}">
+</div>
+
+<script>
+    const menu = document.getElementById('contextMenu')
+    const form = document.getElementById('form')
+    const adBtn = document.getElementById("makeAdminBtn")
+    const manBtn = document.getElementById('makeManagerBtn')
+    const delBtn = document.getElementById("DeleteBtn")
+    const blkBtn = document.getElementById('BlockBtn')
+    const actionInput = document.getElementById('actionInput')
+    const idnput = document.getElementById('IdInput')
+    const formTitle = document.getElementById('formTitle')
+    function menuCall(id,event) {
+        adBtn.setAttribute("onclick", 'formCall("admin","' + id + '")')
+        manBtn.setAttribute("onclick", 'formCall("manager","' + id + '")')
+        delBtn.setAttribute("onclick", 'formCall("delete","' + id + '")')
+        blkBtn.setAttribute("onclick", 'formCall("block","' + id + '")')
+        let x;
+        let y;
+        x=event.clientX;
+        y=event.clientY;
+        console.log(x)
+        console.log(y)
+        menu.style.top=`${y}px`
+        menu.style.left=`${x}px`
+        visible = true;
+        if (visible) {
+            menu.style.visibility = 'visible'
+        }
+    }
+
+    function formHide() {
+        form.style.visibility = 'hidden';
+    }
+
+    function formCall(action, id) {
+        idnput.setAttribute('value', id);
+        actionInput.setAttribute('value', action)
+        const idElem = action+'FormTitle';
+        formTitle.innerText=document.getElementById(idElem).innerHTML;
+        form.style.visibility = 'visible'
+    }
+
+    document.addEventListener("click", ev => {
+        menu.style.visibility = "hidden"
+    })
+
+</script>
+
+</body>
+</html>
