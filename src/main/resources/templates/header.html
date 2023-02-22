@@ -15,12 +15,13 @@
                     <li><a href="/" class="nav-link px-2 link-secondary" th:text="#{title.home}"></a></li>
                     <li th:if="${session.get('user')==null}"><a href="/register" class="nav-link px-2 link-secondary" th:text="#{title.addAd}"></a></li>
                     <li th:if="${session.get('user')!=null}"><a href="/add" class="nav-link px-2 link-secondary" th:text="#{title.addAd}"></a></li>
-                    <li><a href="/search?city=Kyiv" class="nav-link px-2 link-dark" th:text ='#{title.kyiv}'></a></li>
+                    <li><a href="/search?status=RENT" class="nav-link px-2 link-dark" th:text ='#{title.rentAnnounces}'></a></li>
+                    <li><a href="/search?status=SELL" class="nav-link px-2 link-dark" th:text ='#{title.sellAnnounces}'></a></li>
                 </ul>
 
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control" th:placeholder="#{title.search...}" aria-label="Search">
-                </form>
+<!--                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">-->
+<!--                    <input type="search" class="form-control" th:placeholder="#{title.search...}" aria-label="Search">-->
+<!--                </form>-->
                 <a th:if="${session.get('user')==null}" href="/login" style="margin-right: 10px" type="button" class="btn btn-dark" th:text="#{title.logIn}" ></a>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" th:text="#{title.language}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -30,7 +31,7 @@
                         <li><a class="dropdown-item" th:href="${#request.getContextPath()}+'?lang=en'">English</a></li>
                     </ul>
                 </div>
-                <form th:if="${session.get('user')!=null}" style="margin-top: 15px;margin-left:10px " method="post" action="/logout" >
+                <form th:if="${session.get('user')!=null}" style="margin-left:10px " method="post" action="/logout" >
                     <button type="submit" class="btn btn-dark" th:text="#{title.logOut}"></button>
                 </form>
             </div>

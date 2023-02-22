@@ -18,7 +18,8 @@ public class ZeroController {
         System.out.println(user.getRole());
         if (user.getRole() == UserRole.ADMIN)
             return "redirect:/usertable?size=10";
-//    if(user.getType()==UserType.RIALTOR)
-        else return "redirect:/search";
+        if (user.getRole() == UserRole.MANAGER) {
+            return "redirect:/announcesmanagerlist";
+        } else return "redirect:/search";
     }
 }

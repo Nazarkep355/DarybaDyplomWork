@@ -22,6 +22,20 @@ public class CityService {
 
     }
 
+    public List<String> findWithSimilarName(String name, String locale) {
+        List<City> cities =
+                cityRepository.findCitiesByEnNameContainingIgnoreCaseOrUkNameContainingIgnoreCase(name, name);
+        if (locale.contains("uk")) {
+            return cities.stream()
+                    .map(City::getUkName)
+                    .collect(Collectors.toList());
+        } else {
+            return cities.stream()
+                    .map(City::getEnName)
+                    .collect(Collectors.toList());
+        }
+    }
+
     public City findCityByName(String name) {
         List<City> cities = cityRepository.findAll();
         return cities.stream().filter(a -> {

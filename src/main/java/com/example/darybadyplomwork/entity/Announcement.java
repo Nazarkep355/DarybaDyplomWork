@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "announces")
 public class Announcement {
     @Id
@@ -46,5 +48,7 @@ public class Announcement {
     private String additionalInfo;
     @Column
     private AnnounceStatus aStatus;
+    @Column
+    private int cost;
 
 }

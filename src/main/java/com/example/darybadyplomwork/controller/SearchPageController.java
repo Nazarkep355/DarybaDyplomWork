@@ -1,6 +1,9 @@
 package com.example.darybadyplomwork.controller;
 
 import com.example.darybadyplomwork.entity.Announcement;
+import com.example.darybadyplomwork.entity.enums.AnnounceStatus;
+import com.example.darybadyplomwork.entity.enums.AppType;
+import com.example.darybadyplomwork.entity.enums.Status;
 import com.example.darybadyplomwork.service.AnnounceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,14 +23,17 @@ public class SearchPageController {
     private AnnounceService service;
 
     @GetMapping("/search")
-    public String AnnounceList(Pageable pageable, Model model, Optional<String> city, HttpServletRequest request) {
-        if (city.isPresent()) {
-            Page<Announcement> page = service.findByCity(city.get(), pageable);
-            model.addAttribute("announces", page.getContent());
-        } else {
-            Page<Announcement> page = service.findByPageable(pageable);
-            model.addAttribute("announces", page.getContent());
-        }
-        return "search_page.html";
+    public String AnnounceList(Pageable pageable,
+                               Model model, Optional<String> city,
+                               Optional<Integer> mincost, Optional<Integer> maxcost,
+                               Optional<Integer> minrooms, Optional<Integer> maxrooms,
+                               Optional<Integer> minarea, Optional<Integer> maxarea,
+                               Optional<AppType> type, Optional<Status> status
+                               ) {
+       Page<Announcement> page =  service.findPageOfAnnouncements(pageable,city,mincost,maxcost,
+                minrooms,maxrooms,minarea,maxarea,type,status,Optional.of(AnnounceStatus.ACCEPTED));
+       model.addAttribute("announces",page.getContent());
+       model.addAttribute("status",status.orElse(Status.SELL));
+       return "search_page.html";
     }
 }

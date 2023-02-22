@@ -12,19 +12,20 @@
             <option value="RENT" th:text="#{title.status_renting}"></option>
             <option value="SELL" th:text="#{title.selling}"></option>
         </select>
-
-        <!--        <div id="cities" hidden="hidden">-->
-        <!--            <div th:each="city: ${cities}" th:text="${city}"></div>-->
-        <!--        </div>-->
-
         <div class="form-floating my-3">
-            <input class="form-control" list="datalistOptions" id="city" name="city" th:placeholder="#{title.search...}">
+            <input type="number" class="form-control" required  id="cost" name="cost"
+                   th:placeholder="#{title.cost}+' ('+#{title.uah}+')'">
+            <label for="cost" class="form-label" th:text="#{title.cost}+' ('+#{title.uah}+')'"></label>
+        </div>
+        <div class="form-floating my-3">
+            <input class="form-control" required list="datalistOptions"
+                   id="city" name="city" th:placeholder="#{title.city}">
             <datalist id="datalistOptions">
                 <option th:each='city : ${cities}' th:value="${city}"></option></datalist>
             <label for="city" class="form-label" th:text="#{title.city}"></label>
         </div>
         <div class="form-floating my-3">
-            <input id="addressInput" type="text" name="address"  class="form-control"
+            <input id="addressInput" type="text" required name="address"  class="form-control"
                    placeholder="City">
             <label for="addressInput" th:text="#{title.address}"></label>
         </div>
@@ -39,7 +40,7 @@
             <label for="roomsInput" th:text="#{title.roomNum}"></label>
         </div>
         <div class="form-floating my-3">
-            <select id="typeInput"  name="type"  class="form-control"
+            <select id="typeInput" required name="type"  class="form-control"
                     placeholder="City">
                 <option value="STUDIO" th:text="#{title.studio}"></option>
                 <option value="SEPARATE" th:text="#{title.separate}"></option>
@@ -47,23 +48,31 @@
             <label for="typeInput" th:text="#{title.appType}"></label>
         </div>
         <div class="form-floating my-3">
-            <input id="areaInput" type="number" name="area"  class="form-control"
+            <select id="stateInput" required name="state"  class="form-control"
+                    placeholder="City">
+                <option value="EURORENOVATION" th:text="#{title.state_eurorenovation}"></option>
+                <option value="GOOD" th:text="#{title.state_good}"></option>
+            </select>
+            <label for="typeInput" th:text="#{title.appType}"></label>
+        </div>
+        <div class="form-floating my-3">
+            <input id="areaInput" type="number" required name="area"  class="form-control"
                    placeholder="City">
             <label for="areaInput" th:text="#{title.area}"></label>
         </div>
         <div class="form-floating my-3">
-            <input id="floorInput" type="number" name="floor"  class="form-control"
+            <input id="floorInput" type="number" required name="floor"  class="form-control"
                    placeholder="City">
             <label for="areaInput" th:text="#{title.floor}"></label>
         </div>
         <div class="form-floating my-3">
-            <input id="totalInput" type="number" name="total"  class="form-control"
+            <input id="totalInput" type="number" required name="total"  class="form-control"
                    placeholder="City">
             <label for="areaInput" th:text="#{title.totalFloors}"></label>
         </div>
         <div class="mb-3">
-            <label for="formFileMultiple" class="form-label" th:text="#{title.photos}"></label>
-            <input  class="form-control" name='photos' type="file" id="formFileMultiple" multiple>
+            <label for="formFileMultiple"  class="form-label" th:text="#{title.photos}"></label>
+            <input  class="form-control" required name='photos' type="file" id="formFileMultiple" multiple>
         </div>
         <script>
             let cities = []

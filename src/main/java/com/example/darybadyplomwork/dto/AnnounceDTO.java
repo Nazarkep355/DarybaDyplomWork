@@ -1,6 +1,7 @@
 package com.example.darybadyplomwork.dto;
 
 import com.example.darybadyplomwork.entity.enums.AppType;
+import com.example.darybadyplomwork.entity.enums.State;
 import com.example.darybadyplomwork.entity.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,9 @@ public class AnnounceDTO {
     private String house;
     private int rooms;
     private AppType type;
+    private State state;
     private int area;
     private int floor;
     private int total;
+    private int cost;
 }
